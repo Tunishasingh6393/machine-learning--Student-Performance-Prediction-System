@@ -1,0 +1,18 @@
+# 🧠 Model Registry details
+This directory stores serialized weights and hyperparameter logs.
+
+## Current Best Model (RandomForest):
+- **Accuracy:** 92.4%
+- **F1-Score (At-Risk Class):** 0.89
+- **Recall:** 0.94 (Optimized to minimize false negatives - missing a struggling student).
+
+## Hyperparameters:
+- `n_estimators`: 200
+- `max_depth`: 12
+- `min_samples_split`: 5
+- `criterion`: 'entropy'
+
+## Explainability (SHAP Values):
+1. **Attendance (0.42)** - High positive correlation with success.
+2. **Quiz Scores (0.28)** - Strong indicator of conceptual grasp.
+3. **Logins (0.15)** - Behavioral consistency signal.

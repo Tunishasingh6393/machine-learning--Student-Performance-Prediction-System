@@ -1,0 +1,12 @@
+# 🖼️ Application Screenshots & Visuals
+This directory contains UI mockups, architecture diagrams, and system flowcharts.
+
+## 📱 Dashboard Overview (Planned)
+- **Top Bar:** Institution branding and system health.
+- **Left Panel:** Student directory with risk flags (Green/Amber/Red).
+- **Center Panel:** Predictive insights, grade bands, and SHAP feature influence.
+- **Right Panel:** Recommended intervention workflow (e.g., "Schedule Tutoring").
+
+## 🛠️ System Architecture
+![Architecture](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070)
+*(Note: Real screenshots should be captured and uploaded here after deployment)*

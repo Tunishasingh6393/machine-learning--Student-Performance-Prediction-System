@@ -1,0 +1,6 @@
+{
+  "name": "EduGuard: Student Performance Predictor",
+  "description": "An industry-grade predictive analytics dashboard for educational institutions to identify at-risk students and recommend interventions using behavioral and academic signals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

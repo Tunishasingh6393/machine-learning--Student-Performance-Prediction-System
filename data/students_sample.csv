@@ -1,0 +1,9 @@
+student_id,gender,school_type,prior_gpa,attendance_pct,quiz_avg,assign_avg,midterm,study_hours_wk,on_time_submit_pct,lms_logins_wk,forum_posts,parent_edu,commute_min,final_score,final_grade_band,passed
+S001,Female,Govt,3.8,95.0,88.5,92.0,85.0,12,98.0,15,5,UG,20,89.5,A,1
+S002,Male,Private,2.9,72.0,65.0,70.0,55.0,5,80.0,8,2,School,45,62.0,D,1
+S003,Female,Private,3.2,88.0,78.0,82.0,75.0,8,90.0,12,3,PG,15,78.5,B,1
+S004,Male,Govt,2.1,55.0,40.0,45.0,30.0,2,60.0,4,0,School,60,38.0,F,0
+S005,Female,Govt,3.5,92.0,82.0,85.0,80.0,10,95.0,14,4,UG,25,83.0,B,1
+S006,Male,Private,3.0,78.0,72.0,75.0,68.0,7,85.0,10,2,UG,30,73.0,C,1
+S007,Female,Govt,2.8,70.0,60.0,65.0,58.0,4,75.0,6,1,School,50,61.0,D,1
+S008,Male,Govt,3.9,98.0,92.0,95.0,90.0,15,99.0,18,8,PG,10,94.0,A,1

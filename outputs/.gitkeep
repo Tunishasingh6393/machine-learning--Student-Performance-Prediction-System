@@ -1,0 +1,16 @@
+# 📈 Analytics Outputs
+Generated metrics and visualization exports for administrative reports.
+
+## confusion_matrix.png (Mockup Representation)
+```text
+            Predicted Safe | Predicted Risk
+Actual Safe       24       |       2
+Actual Risk        1       |       13
+```
+*Interpretation: Only 1 at-risk student was missed (False Negative), which is critical for student safety.*
+
+## feature_importance.png
+- Attendance %: ████████████████ 45%
+- Quiz Avg: ██████████ 25%
+- Study Hours: ██████ 15%
+- Other: ████ 15%
