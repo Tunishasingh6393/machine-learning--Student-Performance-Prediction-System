@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
+import 'dotenv/config';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fileURLToPath } from 'url';
 
@@ -44,13 +45,17 @@ async function startServer() {
   const students = Array.from({ length: 40 }, (_, i) => generateStudent(i + 1));
   // --- End: Student Data Simulation ---
 
+  console.log(`Starting server in ${process.env.NODE_ENV || 'development'} mode...`);
+
   // API: Get all students
   app.get('/api/students', (req, res) => {
+    console.log('GET /api/students');
     res.json(students);
   });
 
   // API: Predict risk for a student
   app.post('/api/predict', async (req, res) => {
+    console.log('POST /api/predict');
     const student = req.body;
     
     try {

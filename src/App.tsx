@@ -29,7 +29,11 @@ import {
   ResponsiveContainer, 
   Cell,
   PieChart,
-  Pie
+  Pie,
+  AreaChart,
+  Area,
+  Line,
+  ComposedChart
 } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
@@ -121,6 +125,15 @@ export default function App() {
     return bins;
   }, [students]);
 
+  if (loading && students.length === 0) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center space-y-4">
+        <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin font-sans"></div>
+        <p className="text-slate-500 font-medium">Initializing EduGuard Analytics Dashboard...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       {/* Sidebar Placeholder / Header */}
@@ -177,34 +190,90 @@ export default function App() {
         </div>
 
         {/* CHARTS SECTION */}
-        <div className="col-span-12 lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-800">Quiz Performance Distribution</h2>
-              <p className="text-sm text-slate-500">Overview of academic health across all sections</p>
+        <div className="col-span-12 lg:col-span-8 grid grid-cols-1 gap-6">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-800">Semester Performance Trend</h2>
+                <p className="text-sm text-slate-500">Class-wide GPA and Attendance movement</p>
+              </div>
+              <div className="flex bg-slate-100 p-1 rounded-xl">
+                {['Sem 1', 'Sem 2', 'Sem 3'].map((sem, i) => (
+                  <button 
+                    key={sem} 
+                    className={cn(
+                      "px-4 py-1.5 text-xs font-bold rounded-lg transition-all",
+                      i === 1 ? "bg-white text-indigo-600 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                    )}
+                  >
+                    {sem}
+                  </button>
+                ))}
+              </div>
             </div>
-            <select className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20">
-              <ParameterOption label="Semester 1" />
-              <ParameterOption label="Semester 2" />
-            </select>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={[
+                  { month: 'Jan', gpa: 2.8, attendance: 85 },
+                  { month: 'Feb', gpa: 3.1, attendance: 82 },
+                  { month: 'Mar', gpa: 3.0, attendance: 78 },
+                  { month: 'Apr', gpa: 3.4, attendance: 88 },
+                  { month: 'May', gpa: 3.2, attendance: 90 },
+                ]}>
+                  <defs>
+                    <linearGradient id="colorGpa" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.1}/>
+                      <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                  <Tooltip 
+                    contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
+                  />
+                  <Area type="monotone" dataKey="gpa" stroke="#4f46e5" fillOpacity={1} fill="url(#colorGpa)" strokeWidth={3} />
+                  <Line type="monotone" dataKey="attendance" stroke="#10b981" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex gap-6 mt-6 pt-6 border-t border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-indigo-600 rounded-full"></div>
+                <span className="text-xs font-semibold text-slate-500">Class GPA Avg</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 border-2 border-dashed border-emerald-500 rounded-full"></div>
+                <span className="text-xs font-semibold text-slate-500">Attendance Target</span>
+              </div>
+            </div>
           </div>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={distributionData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
-                <Tooltip 
-                  cursor={{fill: '#f8fafc'}}
-                  contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
-                />
-                <Bar dataKey="count" radius={[6, 6, 0, 0]}>
-                  {distributionData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} fillOpacity={0.8} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-800">Quiz Performance Distribution</h2>
+                <p className="text-sm text-slate-500">Overview of academic health across all sections</p>
+              </div>
+            </div>
+            <div className="h-[250px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={distributionData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
+                  <Tooltip 
+                    cursor={{fill: '#f8fafc'}}
+                    contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)'}}
+                  />
+                  <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                    {distributionData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} fillOpacity={0.8} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
 
